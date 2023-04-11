@@ -11,5 +11,9 @@
       "src": "/(.*)",
       "dest": "/"
     }
+  ],
+  "installCommand": "npm install",
+  "redirects": [
+    {"source": "/", "destination": "/:room"}
   ]
 }
