@@ -6,14 +6,5 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ],
-  "installCommand": "npm install",
-  "redirects": [
-    {"source": "/", "destination": "/:room"}
-  ]
+  "installCommand": "npm install"
 }
