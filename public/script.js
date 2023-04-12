@@ -8,8 +8,10 @@ const peer = new Peer();
 
 const peers = {}
 
+let user_id;
 peer.on("open", userId => {
     socket.emit("join", { userId, room })
+    user_id = userId
 })
 
 navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) => {
@@ -17,13 +19,15 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) 
     addVideoStream(video, stream)
 
     peer.on("call", (call) => {
-        videoDiv.innerHTML = ""
         call.answer(stream)
 
-        call.on("stream", (userVideo) => {
-            const video = document.createElement("video")
-            addVideoStream(video, userVideo)
-        })
+            call.on("stream", (userVideo) => {
+                const video = document.createElement("video")
+                video.setAttribute("id", userVideo.id)
+                const video1 = document.getElementById(userVideo.id)
+                addVideoStream(video, userVideo)
+                videoDiv.removeChild(video1)
+            })
     })
 
     socket.on("new-connection", userId => {
@@ -42,6 +46,7 @@ function newUser(userId, stream) {
     const video = document.createElement("video")
 
     call.on("stream", (videoStream) => {
+        console.log("stream call new connection")
         addVideoStream(video, videoStream)
     })
 
