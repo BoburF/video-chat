@@ -8,14 +8,13 @@ const peer = new Peer();
 
 const peers = {}
 
-let user_id;
 peer.on("open", userId => {
     socket.emit("join", { userId, room })
-    user_id = userId
 })
 
 navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) => {
     const video = document.createElement("video")
+    video.muted = true
     addVideoStream(video, stream)
 
     peer.on("call", (call) => {
